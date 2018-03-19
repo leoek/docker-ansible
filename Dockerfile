@@ -1,5 +1,6 @@
 FROM debian:9.4-slim
 
+#install the build deps
 RUN apt-get update -y && apt-get install -y make \
     git \
     make \
@@ -9,18 +10,18 @@ RUN apt-get update -y && apt-get install -y make \
     libffi-dev \
     libssl-dev \
     python-packaging && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p /ansible && \
+    rm -rf /var/lib/apt/lists/* && \
+    #build and install ansible
+    mkdir -p /ansible && \
     cd /ansible/ && \
     git clone git://github.com/ansible/ansible.git && \
     cd /ansible/ansible && \
     git checkout stable-2.4 && \
     make && \
     make install && \
-    rm -rf /ansible/ansible
-
-RUN apt-get remove -y git \
+    rm -rf /ansible/ansible && \
+    #remove dev deps
+    apt-get remove -y git \
     make \
     gcc \
     libffi-dev \
