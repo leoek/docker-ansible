@@ -20,6 +20,14 @@ RUN mkdir -p /ansible && \
     make install && \
     rm -rf /ansible/ansible
 
+RUN apt-get remove -y git \
+    make \
+    gcc \
+    libffi-dev \
+    libssl-dev \
+    python-dev && \
+    apt-get autoremove -y
+
 RUN mkdir -p /ansible/playbooks
 WORKDIR /ansible/playbooks
 
