@@ -52,6 +52,8 @@ RUN chmod +x /usr/bin/docker-compose
 RUN pip install docker
 RUN pip install docker-compose
 
+RUN adduser --disabled-password --gecos "" docker
+
 #ENTRYPOINT [ "/bin/bash" ]
 ENTRYPOINT [ "ansible-playbook" ]
 CMD [ "playbook.yml","-i","hosts","--private-key","~/.ssh/key"]
