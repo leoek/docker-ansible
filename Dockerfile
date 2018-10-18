@@ -16,7 +16,7 @@ RUN apt-get update -y && apt-get install -y make \
     cd /ansible/ && \
     git clone git://github.com/ansible/ansible.git && \
     cd /ansible/ansible && \
-    git checkout stable-2.4 && \
+    git checkout stable-2.5 && \
     make && \
     make install && \
     rm -rf /ansible/ansible && \
