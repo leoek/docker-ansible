@@ -1,33 +1,16 @@
-FROM debian:9.4-slim
+FROM debian:10.6-slim
 
-#install the build deps
-RUN apt-get update -y && apt-get install -y make \
-    git \
-    make \
-    python-setuptools \
-    gcc \
-    python-dev \
-    libffi-dev \
-    libssl-dev \
-    python-packaging && \
+#install python and python-pip
+RUN apt-get update -y && \
+    apt-get install -y python3 python3-pip && \
     rm -rf /var/lib/apt/lists/* && \
-    #build and install ansible
-    mkdir -p /ansible && \
-    cd /ansible/ && \
-    git clone git://github.com/ansible/ansible.git && \
-    cd /ansible/ansible && \
-    git checkout stable-2.7 && \
-    make && \
-    make install && \
-    rm -rf /ansible/ansible && \
-    #remove dev deps
-    apt-get remove -y git \
-    make \
-    gcc \
-    libffi-dev \
-    libssl-dev \
-    python-dev && \
     apt-get autoremove -y
+
+ARG ANSIBLE_VERSION=2.7
+
+#install ansible
+RUN pip3 install ansible==$ANSIBLE_VERSION && \
+    pip3 install paramiko
 
 RUN mkdir -p /ansible/playbooks
 WORKDIR /ansible/playbooks
