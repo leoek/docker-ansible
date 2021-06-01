@@ -1,16 +1,16 @@
-FROM debian:10.6-slim
+FROM debian:bullseye-slim
+
+ARG ANSIBLE_VERSION=4.0
 
 #install python and python-pip
 RUN apt-get update -y && \
     apt-get install -y python3 python3-pip && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get autoremove -y
-
-ARG ANSIBLE_VERSION=3.0
-
 #install ansible
-RUN pip3 install ansible==$ANSIBLE_VERSION && \
-    pip3 install paramiko
+    pip3 install ansible==$ANSIBLE_VERSION && \
+    pip3 install paramiko && \
+    apt-get purge -y python3-pip && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /ansible/playbooks
 WORKDIR /ansible/playbooks

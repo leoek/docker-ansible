@@ -1,16 +1,16 @@
-FROM debian:stable-slim
+FROM debian:bullseye-slim
+
+ARG ANSIBLE_VERSION=2.11
 
 #install python and python-pip
 RUN apt-get update -y && \
     apt-get install -y python3 python3-pip && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get autoremove -y
-
-ARG ANSIBLE_VERSION=2.11
-
 #install ansible
-RUN pip3 install ansible-core==$ANSIBLE_VERSION && \
-    pip3 install paramiko
+    pip3 install ansible-core==$ANSIBLE_VERSION && \
+    pip3 install paramiko && \
+    apt-get purge -y python3-pip && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /ansible/playbooks
 WORKDIR /ansible/playbooks
