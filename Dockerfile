@@ -6,7 +6,7 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get autoremove -y
 
-ARG ANSIBLE_VERSION=2.10
+ARG ANSIBLE_VERSION=2.11
 
 #install ansible
 RUN pip3 install ansible==$ANSIBLE_VERSION && \
